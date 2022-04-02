@@ -79,7 +79,7 @@ class FeedViewController: UIViewController, MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         // Create the comment
         let comment = PFObject(className: "Comments")
-        comment["text"] = "This is a random comment"
+        comment["text"] = text
         comment["post"] = selectedPost
         comment["author"] = PFUser.current()!
         
@@ -110,8 +110,7 @@ class FeedViewController: UIViewController, MessageInputBarDelegate {
         
         let main = UIStoryboard(name: "Main", bundle: nil)
         let loginViewController = main.instantiateViewController(withIdentifier: "LoginViewController")
-        
-        let delegate = UIApplication.shared.delegate as! SceneDelegate
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let delegate = windowScene.delegate as? SceneDelegate else { return }
         
         delegate.window?.rootViewController = loginViewController
         
@@ -175,7 +174,7 @@ extension FeedViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             let comment = comments[indexPath.row - 1]
-            cell.nameLabel.text = comment["text"] as? String
+            cell.commentLabel.text = comment["text"] as? String
             
             let user = comment["author"] as! PFUser
             cell.nameLabel.text = user.username
