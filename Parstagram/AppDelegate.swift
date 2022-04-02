@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             configuration.clientKey = CLIENT_KEY
             configuration.server = "https://parseapi.back4app.com"
         }))
+        
+     
+        
         // Override point for customization after application launch.
         return true
     }
